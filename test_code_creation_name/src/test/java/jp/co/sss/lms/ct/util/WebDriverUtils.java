@@ -23,6 +23,9 @@ public class WebDriverUtils {
 
 	/** Webドライバ */
 	public static WebDriver webDriver;
+	
+	/**ポート番号 */
+	public static final int port = 8080;
 
 	/**
 	 * インスタンス取得
@@ -94,6 +97,7 @@ public class WebDriverUtils {
 			String className = instance.getClass().getEnclosingClass().getSimpleName();
 			String methodName = instance.getClass().getEnclosingMethod().getName();
 			Files.move(tempFile, new File("evidence\\" + className + "_" + methodName + ".png"));
+			//呼び出しクラス(case)ごとにディレクトリを作成して移動
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -114,5 +118,29 @@ public class WebDriverUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 *任意のID/Passでログイン
+	 */
+	public static void login(String id, String password) {
+		webDriver.findElement(By.id("loginId")).sendKeys(id);
+		webDriver.findElement(By.id("password")).sendKeys(password);
+		webDriver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		pageLoadTimeout(3);
+	}
+	
+	/**
+	 *初回ログイン済みアカウント'StudentAA01'で正常ログイン)
+	 * @param ID:StudentAA01
+	 * @param password:Testtest01
+	 * */
+	public static void loginWithTheUsed() {
+		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA01");
+		webDriver.findElement(By.id("password")).sendKeys("Testtest01");
+		webDriver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		pageLoadTimeout(3);
+	}
+	
+	
 
 }
