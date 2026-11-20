@@ -38,8 +38,8 @@ public class Case03 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		goTo("http://localhost:" + port + "/lms");
-		assertEquals(Constants.CONTEXT_PATH, webDriver.getCurrentUrl());
+		goTo("http://localhost:" + Constants.PORT + "/lms");
+		assertEquals(Constants.CONTEXT_PATH + "/", webDriver.getCurrentUrl());
 		getEvidence(new Object() {});
 	}
 

@@ -23,9 +23,6 @@ public class WebDriverUtils {
 
 	/** Webドライバ */
 	public static WebDriver webDriver;
-	
-	/**ポート番号 */
-	public static final int port = 8080;
 
 	/**
 	 * インスタンス取得
@@ -138,9 +135,9 @@ public class WebDriverUtils {
 		webDriver.findElement(By.id("loginId")).sendKeys("StudentAA01");
 		webDriver.findElement(By.id("password")).sendKeys("Testtest01");
 		webDriver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		pageLoadTimeout(3);
+		//リダイレクトのため、コース詳細画面に以降するまで待機
+		final WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.urlContains("/course/detail"));
 	}
 	
-	
-
 }
