@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import jp.co.sss.lms.ct.util.Constants;
+
 /**
  * 結合テスト ログイン機能①
  * ケース01
@@ -37,8 +39,7 @@ public class Case01 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo("http://localhost:" + port + "/lms");
-		//スクリーンショットに加えて、タイトルも確認
-		assertEquals("ログイン | LMS", webDriver.getTitle());
+		assertEquals(Constants.CONTEXT_PATH + "/", webDriver.getCurrentUrl());
 		getEvidence(new Object() {});
 	}
 

@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 
+import jp.co.sss.lms.ct.util.Constants;
+
 /**
  * 結合テスト ログイン機能①
  * ケース02
@@ -38,7 +40,7 @@ public class Case02 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo("http://localhost:" + port + "/lms");
-		assertEquals("ログイン | LMS", webDriver.getTitle());
+		assertEquals(Constants.CONTEXT_PATH + "/", webDriver.getCurrentUrl());
 		getEvidence(new Object() {});
 	}
 
@@ -46,12 +48,11 @@ public class Case02 {
 	@Order(2)
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
-		goTo("http://localhost:" + port + "/lms");
 		String wrongId = "nonexistentAccount";
 		String wrongPass = "nonexistentPassword";
 		login(wrongId, wrongPass);
 		//自画面遷移とエラーメッセージ表示を確認
-		assertEquals("ログイン | LMS", webDriver.getTitle());
+		assertEquals(Constants.CONTEXT_PATH + "/", webDriver.getCurrentUrl());
 		/*エラーメッセージは<span th:if>なので、要素選択できれば正常判定
 		 *(メッセージ内容の変更を想定し、テキスト一致は判定しない)*/
 		webDriver.findElement(By.cssSelector(".help-inline.error"));

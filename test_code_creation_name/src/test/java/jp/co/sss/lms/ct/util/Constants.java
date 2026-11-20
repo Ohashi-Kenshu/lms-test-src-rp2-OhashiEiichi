@@ -1,0 +1,19 @@
+package jp.co.sss.lms.ct.util;
+
+public class Constants {
+
+	private Constants() {
+
+	}
+
+	//ポート番号
+	public static final int PORT = 8080;
+
+	//初回ログイン済みアカウントID
+	public static final String USED_ACCOUNT_ID = "StudentAA01";
+	//初回ログイン済みアカウントPass
+	public static final String USED_ACCOUNT_PASSWORD = "Testtest01";
+
+	//コンテクストパス
+	public static final String CONTEXT_PATH = "http://localhost:8080/lms";
+}
