@@ -1,6 +1,10 @@
 package jp.co.sss.lms.ct.f02_faq;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +13,11 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+
+import jp.co.sss.lms.ct.util.Constants;
 
 /**
  * 結合テスト よくある質問機能
@@ -35,42 +44,70 @@ public class Case06 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		goTo("http://localhost:" + Constants.PORT + "/lms");
+		assertEquals(Constants.CONTEXT_PATH + "/", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
+		loginWithTheUsed();
+		//画面遷移を確認
+		assertEquals(Constants.CONTEXT_PATH + "/course/detail", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		// TODO ここに追加
+		webDriver.findElement(By.linkText("機能")).click();
+		webDriver.findElement(By.linkText("ヘルプ")).click();
+		assertEquals(Constants.CONTEXT_PATH + "/help", webDriver.getCurrentUrl());
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		// TODO ここに追加
+		webDriver.findElement(By.linkText("よくある質問")).click();
+		Object[] windowHandles = webDriver.getWindowHandles().toArray();
+		webDriver.switchTo().window((String) windowHandles[1]);
+		assertEquals(Constants.CONTEXT_PATH + "/faq", webDriver.getCurrentUrl());
+		getEvidence(new Object(){});
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 カテゴリ検索で該当カテゴリの検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加
+		webDriver.findElement(
+				By.xpath("//a[contains(text(), '【人材開発支援助成金】')]"))
+				.click();
+		JavascriptExecutor js = (JavascriptExecutor)webDriver;
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+		getEvidence(new Object(){});
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 検索結果の質問をクリックしその回答を表示")
 	void test06() {
-		// TODO ここに追加
+		List<WebElement> results = new ArrayList<>();
+		results = webDriver.findElements(By.xpath("//dl[contains(@id,'question-h')]"));
+		JavascriptExecutor js = (JavascriptExecutor)webDriver;
+		for (WebElement result : results) {
+			js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+			result.click();
+			js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+		}
+		getEvidence(new Object(){});
 	}
 
 }
